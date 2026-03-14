@@ -15,15 +15,20 @@ void readWordsFromFile(MyStack *s, ifstream &file) {
 
 void display(MyStack *s) {
     MyStack temp(*s);
+    MyStack rev(MAX_SIZE);
     string word;
     while (!temp.isEmpty()) {
         temp.pop(word);
-        cout << word << " ";
+        rev.push(word);
+    }
+    string w;
+    while (!rev.isEmpty()) {
+        rev.pop(w);
+        cout << w << " ";
     }
     cout << endl;
 }
 
-// Task 1: Copy words in reverse order into another stack and display
 MyStack* reverseCopy(MyStack *s) {
     MyStack temp(*s);
     MyStack *rev = new MyStack(MAX_SIZE);
@@ -67,9 +72,68 @@ void removeDuplicates(MyStack *s) {
     cout << "After Removing Duplicates: ";
     display(&result);
 }
-
-
 void countFrequency(MyStack *s) {
+    MyStack words(MAX_SIZE);   
+    MyStack freq(MAX_SIZE);   
+    MyStack temp(*s);
+
+    string word;
+    while (!temp.isEmpty()) {
+        temp.pop(word);
+
+        MyStack checkWords(words);
+        MyStack checkFreq(freq);
+        MyStack newWords(MAX_SIZE);
+        MyStack newFreq(MAX_SIZE);
+
+        string w, f;
+        bool found = false;
+
+        while (!checkWords.isEmpty()) {
+            checkWords.pop(w);
+            checkFreq.pop(f);
+            if (w == word) {
+                found = true;
+                int count = stoi(f) + 1;
+                newWords.push(w);
+                newFreq.push(to_string(count));
+            } else {
+                newWords.push(w);
+                newFreq.push(f);
+            }
+        }
+
+        if (!found) {
+            newWords.push(word);
+            newFreq.push("1");
+        }
+
+        words = MyStack(MAX_SIZE);
+        freq  = MyStack(MAX_SIZE);
+        MyStack tempNew(newWords);
+        MyStack tempFreq(newFreq);
+
+        MyStack revWords(MAX_SIZE);
+        MyStack revFreq(MAX_SIZE);
+        while (!tempNew.isEmpty()) {
+            tempNew.pop(w);
+            tempFreq.pop(f);
+            revWords.push(w);
+            revFreq.push(f);
+        }
+        words = revWords;
+        freq  = revFreq;
+    }
+
+    cout << "Word Frequencies:" << endl;
+    MyStack dispWords(words);
+    MyStack dispFreq(freq);
+    string w, f;
+    while (!dispWords.isEmpty()) {
+        dispWords.pop(w);
+        dispFreq.pop(f);
+        cout << w << " : " << f << endl;
+    }
 }
 
 int main() {
@@ -92,8 +156,7 @@ int main() {
 
     removeDuplicates(rev);
     cout << endl;
-
-    countFrequency(&stack);
+     countFrequency(&stack);
 
     delete rev;
     return 0;

@@ -41,6 +41,7 @@ void MyStack::push(string v)
         return;
     }
     cout << "Stack is full\n";
+    return;
 }
 
 bool MyStack::pop(string & v)
