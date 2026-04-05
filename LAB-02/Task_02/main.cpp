@@ -156,3 +156,4 @@ void stats(Stack * s, int & max, float & average)
     }
     average = count > 0 ? (float)sum / count : 0.0f;
 }
+
