@@ -1,0 +1,1 @@
+ai is taking the ability of humans to write good software and is writing bad code itself
