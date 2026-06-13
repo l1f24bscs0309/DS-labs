@@ -156,7 +156,7 @@ int main()
 
     // ---- Step 5: Delete a word ----
     cout << "\n=== Delete a word ===" << endl;
-    cout << "Enter a word to delete: ";`
+    cout << "Enter a word to delete: ";
     string deleteWord;
     cin >> deleteWord;
     deleteWord = cleanWord(deleteWord);
